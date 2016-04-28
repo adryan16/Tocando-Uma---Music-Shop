@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"   
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/modelo_template.xhtml">
+
+    <ui:define name="menu">
+        <ui:include src="../includes/menu_principal.xhtml"/>
+    </ui:define>
+
+    <ui:define name="conteudo">
+        <h:form id="frmEditora">
+            <p:dataTable emptyMessage="Nenhuma editora cadastrada!"
+                         value="#{MBEditora.itens}"
+                         var="item" 
+                         paginator="true"
+                         rows="5"
+                         id="tbEditora">
+
+                <f:facet name="header">
+                    Editora - Listagem  
+                </f:facet>
+                <p:column headerText="ID" sortBy="#{item.id}" filterBy="#{item.id}">
+                    <h:outputText value="#{item.id}" />
+                </p:column>
+                <p:column headerText="Razão Social" sortBy="#{item.razaoSocial}" filterBy="#{item.razaoSocial}">
+                    <h:outputText value="#{item.razaoSocial}" />
+                </p:column>
+                <p:column headerText="Opções">
+                    <p:commandButton icon="ui-icon-trash"
+                                     actionListener="#{MBEditora.excluirEditora()}"
+                                     oncomplete="PF('dlgEdExcluir').show();"
+                                     update=":frmExcluiEditora:pnlExcluiEditora
+                                     :msgGlobal">
+                        <f:setPropertyActionListener target="#{MBEditora.editora}"
+                                                     value="#{item}"/>
+                    </p:commandButton>
+                    <p:commandButton icon="ui-icon-pencil" 
+                                     actionListener="#{MBEditora.alterarEditora()}"
+                                     oncomplete="PF('dlgEdEditar').show();"
+                                     update=":frmEditarEditora:pnlEditarEditora
+                                     :msgGlobal">
+                        <f:setPropertyActionListener target="#{MBEditora.editora}"
+                                                     value="#{item}"/>
+                    </p:commandButton>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton value="Novo" actionListener="#{MBEditora.prepararEditora()}"
+                                     oncomplete="PF('dlgEdNovo').show();" update=":frmCadastraEditora:pnlCadastraEditora
+                                     :msgGlobal" />
+                </f:facet>
+            </p:dataTable>
+        </h:form>  
+
+        <!-- Cadastrar -->
+        <p:dialog widgetVar="dlgEdNovo" closable="false"
+                  draggable="false" resizable="false"
+                  header="Nova Editora" modal="true" appendTo="@(body)">
+            <h:form id="frmCadastraEditora">
+                <h:panelGrid columns="2" id="pnlCadastraEditora">
+                    <p:outputLabel value="Razão Social"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBEditora.editora.razaoSocial}" />
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Gravar" 
+                                     actionListener="#{MBEditora.novaEditora()}"
+                                     oncomplete="PF('dlgEdNovo').hide();" 
+                                     update=":frmEditora:tbEditora
+                                     :msgGlobal" />
+                    <p:commandButton value="Cancelar" onclick="PF('dlgEdNovo').hide();" />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <!-- Excluir -->
+        <p:dialog widgetVar="dlgEdExcluir" closable="false"
+                  draggable="false" resizable="false"
+                  header="Excluir" modal="true" appendTo="@(body)">
+            <h:form id="frmExcluiEditora">
+                <h:panelGrid columns="2" id="pnlExcluiEditora" >
+                    <h:outputLabel value="ID: " />
+                    <h:outputText value="#{MBEditora.editora.id}" />
+                    <h:outputLabel value="Razão Social: " />
+                    <h:outputText value="#{MBEditora.editora.razaoSocial}" />
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Excluir" 
+                                     actionListener="#{MBEditora.excluirEditora()}"
+                                     oncomplete="PF('dlgEdExcluir').hide();" 
+                                     update=":frmEditora:tbEditora
+                                     :msgGlobal" />
+                    <p:commandButton value="Cancelar" onclick="PF('dlgEdExcluir').hide();" />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <!-- Alterar -->
+
+        <p:dialog widgetVar="dlgEdEditar" closable="false"
+                  draggable="false" resizable="false"
+                  header="Editar" modal="true" appendTo="@(body)">
+            <h:form id="frmEditarEditora">
+                <h:panelGrid columns="2" id="pnlEditarEditora">
+                    <h:outputLabel value="ID: " />
+                    <h:outputLabel value="#{MBEditora.editora.id}" />
+                    <h:outputLabel value="Razão Social: " />
+                    <h:inputText value="#{MBEditora.editora.razaoSocial}" size="30" maxlength="50" />
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Editar" 
+                                     actionListener="#{MBEditora.alterarEditora()}"
+                                     oncomplete="PF('dlgEdEditar').hide();" 
+                                     update=":frmEditora:tbEditora
+                                     :msgGlobal" />
+                    <p:commandButton value="Cancelar" onclick="PF('dlgEdEditar').hide();" />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>
