@@ -1,15 +1,15 @@
 package br.com.tocOne.model;
 
 public class Instrumentos {
-        private int id;
+        private int id_instrumento;
         private String modelo, marca, qtd, precoUnitario, cor;
 
-    public int getId() {
-        return id;
+    public int getId_instrumento() {
+        return id_instrumento;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_instrumento(int id_instrumento) {
+        this.id_instrumento = id_instrumento;
     }
 
     public String getModelo() {
@@ -36,12 +36,12 @@ public class Instrumentos {
         this.qtd = qtd;
     }
 
-    public String getPrecoU() {
+    public String getPrecoUnitario() {
         return precoUnitario;
     }
 
-    public void setPrecoU(String precoU) {
-        this.precoUnitario = precoU;
+    public void setPrecoUnitario(String precoUnitario) {
+        this.precoUnitario = precoUnitario;
     }
 
     public String getCor() {
@@ -52,3 +52,5 @@ public class Instrumentos {
         this.cor = cor;
     }
 }
+
+   

@@ -14,16 +14,20 @@
 			<storage><![CDATA[engine=InnoDB]]></storage>
 		</table>
 		<table name="tipo_instrumento" >
+			<column name="id_tipo" type="int" jt="4" mandatory="y" autoincrement="y" />
 			<column name="cordas" type="varchar" length="255" jt="12" mandatory="y" />
 			<column name="teclas" type="varchar" length="255" jt="12" mandatory="y" />
 			<column name="sopro" type="varchar" length="255" jt="12" mandatory="y" />
 			<column name="percussao" type="varchar" length="255" jt="12" mandatory="y" />
-			<column name="id_tipo" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="id_instrumento" type="int" jt="4" mandatory="y" autoincrement="y" />
 			<index name="idx_tipo_instrumento" unique="NORMAL" >
+				<column name="id_instrumento" />
+			</index>
+			<index name="pk_tipo_instrumento" unique="PRIMARY_KEY" >
 				<column name="id_tipo" />
 			</index>
 			<fk name="fk_tipo_instrumento" to_schema="toc_one" to_table="instrumentos" >
-				<fk_column name="id_tipo" pk="id" />
+				<fk_column name="id_instrumento" pk="id" />
 			</fk>
 			<storage><![CDATA[engine=InnoDB]]></storage>
 		</table>
