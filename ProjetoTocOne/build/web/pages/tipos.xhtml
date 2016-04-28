@@ -13,42 +13,51 @@
 
     <ui:define name="conteudo">
         <h:form id="frmEditora">
-            <p:dataTable emptyMessage="Nenhuma editora cadastrada!"
-                         value="#{MBEditora.itens}"
+            <p:dataTable emptyMessage="Nenhum produto cadastrada!"
+                         value="#{MBProduto.itens}"
                          var="item" 
                          paginator="true"
                          rows="5"
                          id="tbEditora">
 
                 <f:facet name="header">
-                    Editora - Listagem  
+                    Produto - Listagem  
                 </f:facet>
                 <p:column headerText="ID" sortBy="#{item.id}" filterBy="#{item.id}">
                     <h:outputText value="#{item.id}" />
                 </p:column>
+                <p:column headerText="Quantidade" sortBy="#{item.qtd}" filterBy="#{item.qtd}">
+                    <h:outputText value="#{item.qtd}" />
+                </p:column>
+                <p:column headerText="Descrição" sortBy="#{item.descricao}" filterBy="#{item.descricao}">
+                    <h:outputText value="#{item.descricao}" />
+                </p:column>
                 <p:column headerText="Razão Social" sortBy="#{item.razaoSocial}" filterBy="#{item.razaoSocial}">
                     <h:outputText value="#{item.razaoSocial}" />
                 </p:column>
+                <p:column headerText="Preço" sortBy="#{item.preco}" filterBy="#{item.preco}">
+                    <h:outputText value="#{item.preco}" />
+                </p:column>
                 <p:column headerText="Opções">
                     <p:commandButton icon="ui-icon-trash"
-                                     actionListener="#{MBEditora.excluirEditora()}"
+                                     actionListener="#{MBProduto.excluirProduto()}"
                                      oncomplete="PF('dlgEdExcluir').show();"
                                      update=":frmExcluiEditora:pnlExcluiEditora
                                      :msgGlobal">
-                        <f:setPropertyActionListener target="#{MBEditora.editora}"
+                        <f:setPropertyActionListener target="#{MBProduto.produto}"
                                                      value="#{item}"/>
                     </p:commandButton>
                     <p:commandButton icon="ui-icon-pencil" 
-                                     actionListener="#{MBEditora.alterarEditora()}"
+                                     actionListener="#{MBProduto.alterarProduto()}"
                                      oncomplete="PF('dlgEdEditar').show();"
                                      update=":frmEditarEditora:pnlEditarEditora
                                      :msgGlobal">
-                        <f:setPropertyActionListener target="#{MBEditora.editora}"
+                        <f:setPropertyActionListener target="#{MBProduto.produto}"
                                                      value="#{item}"/>
                     </p:commandButton>
                 </p:column>
                 <f:facet name="footer">
-                    <p:commandButton value="Novo" actionListener="#{MBEditora.prepararEditora()}"
+                    <p:commandButton value="Novo" actionListener="#{MBProduto.prepararProduto()}"
                                      oncomplete="PF('dlgEdNovo').show();" update=":frmCadastraEditora:pnlCadastraEditora
                                      :msgGlobal" />
                 </f:facet>
@@ -61,12 +70,18 @@
                   header="Nova Editora" modal="true" appendTo="@(body)">
             <h:form id="frmCadastraEditora">
                 <h:panelGrid columns="2" id="pnlCadastraEditora">
-                    <p:outputLabel value="Razão Social"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBEditora.editora.razaoSocial}" />
+                    <p:outputLabel value="Quantidade"/>
+                    <h:inputText value="#{MBProduto.produto.qtd}" size="30" maxlength="50" />
+                    <p:outputLabel value="Descrição"/>
+                    <h:inputText value="#{MBProduto.produto.descricao}" size="30" maxlength="50"  /> 
+                    <p:outputLabel value="Preço"/>
+                    <h:inputText value="#{MBProduto.produto.preco}" size="30" maxlength="50" />
+                     <p:outputLabel value="Razão Social"/>
+                    <h:inputText value="#{MBProduto.produto.id_editora}" size="30" maxlength="50" />
                 </h:panelGrid>
                 <h:panelGrid columns="2">
                     <p:commandButton value="Gravar" 
-                                     actionListener="#{MBEditora.novaEditora()}"
+                                     actionListener="#{MBProduto.novoProduto()}"
                                      oncomplete="PF('dlgEdNovo').hide();" 
                                      update=":frmEditora:tbEditora
                                      :msgGlobal" />
@@ -82,13 +97,20 @@
             <h:form id="frmExcluiEditora">
                 <h:panelGrid columns="2" id="pnlExcluiEditora" >
                     <h:outputLabel value="ID: " />
-                    <h:outputText value="#{MBEditora.editora.id}" />
-                    <h:outputLabel value="Razão Social: " />
-                    <h:outputText value="#{MBEditora.editora.razaoSocial}" />
+                    <h:outputLabel value="#{MBProduto.produto.id}" />
+
+                    <h:outputLabel value="Quantidade: " />
+                    <h:outputLabel value="#{MBProduto.produto.qtd}" />
+
+                    <h:outputLabel value="Descrição: " />
+                    <h:outputLabel value="#{MBProduto.produto.descricao}" />
+
+                    <h:outputLabel value="Preço: " />
+                    <h:outputLabel value="#{MBProduto.produto.preco}" />
                 </h:panelGrid>
                 <h:panelGrid columns="2">
                     <p:commandButton value="Excluir" 
-                                     actionListener="#{MBEditora.excluirEditora()}"
+                                     actionListener="#{MBProduto.excluirProduto()}"
                                      oncomplete="PF('dlgEdExcluir').hide();" 
                                      update=":frmEditora:tbEditora
                                      :msgGlobal" />
@@ -105,13 +127,23 @@
             <h:form id="frmEditarEditora">
                 <h:panelGrid columns="2" id="pnlEditarEditora">
                     <h:outputLabel value="ID: " />
-                    <h:outputLabel value="#{MBEditora.editora.id}" />
+                    <h:outputLabel value="#{MBProduto.produto.id}" />
+
+                    <h:outputLabel value="Quantidade: " />
+                    <h:inputText value="#{MBProduto.produto.qtd}" size="30" maxlength="50" />
+
+                    <h:outputLabel value="Descriçao: " />
+                    <h:inputText value="#{MBProduto.produto.descricao}" size="30" maxlength="50"  />
+                    
+                    <h:outputLabel value="Preço: " />
+                    <h:inputText value="#{MBProduto.produto.preco}" size="30" maxlength="50" />
+                    
                     <h:outputLabel value="Razão Social: " />
-                    <h:inputText value="#{MBEditora.editora.razaoSocial}" size="30" maxlength="50" />
+                    <h:inputText value="#{MBProduto.produto.id_editora}" size="30" maxlength="50"  />
                 </h:panelGrid>
                 <h:panelGrid columns="2">
                     <p:commandButton value="Editar" 
-                                     actionListener="#{MBEditora.alterarEditora()}"
+                                     actionListener="#{MBProduto.alterarProduto()}"
                                      oncomplete="PF('dlgEdEditar').hide();" 
                                      update=":frmEditora:tbEditora
                                      :msgGlobal" />

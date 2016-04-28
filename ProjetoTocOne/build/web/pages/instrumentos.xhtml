@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"   
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/modelo_template.xhtml">
+
+    <ui:define name="menu">
+        <ui:include src="../includes/menu_principal.xhtml"/>
+    </ui:define>
+
+    <ui:define name="conteudo">
+        <h:form id="frmInstrumentos">
+            <p:dataTable emptyMessage="Nenhuma editora cadastrada!"
+                         value="#{MBInstrumentos.itens}"
+                         var="item" 
+                         paginator="true"
+                         rows="5"
+                         id="tbEditora">
+
+                <f:facet name="header">
+                    Editora - Listagem  
+                </f:facet>
+                <p:column headerText="ID" sortBy="#{item.id}" filterBy="#{item.id}">
+                    <h:outputText value="#{item.id}" />
+                </p:column>
+                <p:column headerText="Marca" sortBy="#{item.marca}" filterBy="#{item.marca}">
+                    <h:outputText value="#{item.marca}" />
+                </p:column>
+                <p:column headerText="Opções">
+                    <p:commandButton icon="ui-icon-trash"
+                                     actionListener="#{MBInstrumentos.excluirInstrumento()}"
+                                     oncomplete="PF('dlgEdExcluir').show();"
+                                     update=":frmExcluiInstrumento:pnlExcluiInstrumento
+                                     :msgGlobal">
+                        <f:setPropertyActionListener target="#{MBInstrumentos.instrumentos}"
+                                                     value="#{item}"/>
+                    </p:commandButton>
+                    <p:commandButton icon="ui-icon-pencil" 
+                                     actionListener="#{MBInstrumentos.alterarInstrumento()}"
+                                     oncomplete="PF('dlgEdEditar').show();"
+                                     update=":frmEditarInstrumento:pnlEditarInstrumento
+                                     :msgGlobal">
+                        <f:setPropertyActionListener target="#{MBInstrumentos.instrumentos}"
+                                                     value="#{item}"/>
+                    </p:commandButton>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton value="Novo" actionListener="#{MBInstrumentos.prepararInstrumento()}"
+                                     oncomplete="PF('dlgEdNovo').show();" update=":frmCadastraInstrumento:pnlCadastraInstrumento
+                                     :msgGlobal" />
+                </f:facet>
+            </p:dataTable>
+        </h:form>  
+
+        <!-- Cadastrar -->
+        <p:dialog widgetVar="dlgEdNovo" closable="false"
+                  draggable="false" resizable="false"
+                  header="Novo Instrumento" modal="true" appendTo="@(body)">
+            <h:form id="frmCadastraInstrumento">
+                <h:panelGrid columns="2" id="pnlCadastraInstrumento">
+                    <p:outputLabel value="ID"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.id_instrumento}" />
+
+                    <p:outputLabel value="Marca"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.marca}" />
+
+                    <p:outputLabel value="Cor"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.cor}" />
+
+                    <p:outputLabel value="Quantidade"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.qtd}" />
+
+                    <p:outputLabel value="Modelo"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.modelo}" />
+
+                    <p:outputLabel value="Preço Unitário"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.precoUnitario}" />
+
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Gravar" 
+                                     actionListener="#{MBInstrumentos.novoInstrumento()}"
+                                     oncomplete="PF('dlgEdNovo').hide();" 
+                                     update=":frmInstrumento:tbInstrumento
+                                     :msgGlobal" />
+                    <p:commandButton value="Cancelar" onclick="PF('dlgEdNovo').hide();" />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <!-- Excluir -->
+        <p:dialog widgetVar="dlgEdExcluir" closable="false"
+                  draggable="false" resizable="false"
+                  header="Excluir" modal="true" appendTo="@(body)">
+            <h:form id="frmExcluiInstrumento">
+                <h:panelGrid columns="2" id="pnlExcluiInstrumento" >
+                    <h:outputLabel value="ID: " />
+                    <h:outputText value="#{MBInstrumentos.instrumentos.id_instrumento}" />
+
+                    <p:outputLabel value="Marca"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.marca}" />
+
+                    <p:outputLabel value="Cor"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.cor}" />
+
+                    <p:outputLabel value="Quantidade"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.qtd}" />
+
+                    <p:outputLabel value="Modelo"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.modelo}" />
+
+                    <p:outputLabel value="Preço Unitário"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.precoUnitario}" />
+
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Excluir" 
+                                     actionListener="#{MBInstrumentos.excluirInstrumento()}"
+                                     oncomplete="PF('dlgEdExcluir').hide();" 
+                                     update=":frmInstrumento:tbInstrumento
+                                     :msgGlobal" />
+                    <p:commandButton value="Cancelar" onclick="PF('dlgEdExcluir').hide();" />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <!-- Alterar -->
+
+        <p:dialog widgetVar="dlgEdEditar" closable="false"
+                  draggable="false" resizable="false"
+                  header="Editar" modal="true" appendTo="@(body)">
+            <h:form id="frmEditarInstrumento">
+                <h:panelGrid columns="2" id="pnlEditarInstrumento">
+                    <h:outputLabel value="ID: " />
+                    <h:outputLabel value="#{MBInstrumentos.instrumentos.id_instrumento}" />
+                    
+                    <p:outputLabel value="Marca"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.marca}" />
+
+                    <p:outputLabel value="Cor"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.cor}" />
+
+                    <p:outputLabel value="Quantidade"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.qtd}" />
+
+                    <p:outputLabel value="Modelo"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.modelo}" />
+
+                    <p:outputLabel value="Preço Unitário"/>
+                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.precoUnitario}" />
+                    
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Editar" 
+                                     actionListener="#{MBInstrumentos.alterarInstrumento()}"
+                                     oncomplete="PF('dlgEdEditar').hide();" 
+                                     update=":frmInstrumento:tbInstrumento
+                                     :msgGlobal" />
+                    <p:commandButton value="Cancelar" onclick="PF('dlgEdEditar').hide();" />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>
