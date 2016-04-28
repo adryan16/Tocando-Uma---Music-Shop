@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Projeto_github" id="Project_3ca486" html="y" template="Default" database="MySql" >
+	<schema name="toc_one" schemaname="toc_one" >
+		<table name="instrumentos" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="marca" type="text" jt="-1" mandatory="y" />
+			<column name="cor" type="text" jt="-1" mandatory="y" />
+			<column name="qtd" type="int" jt="4" mandatory="y" />
+			<column name="modelo" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="preco_unitario" type="int" jt="4" mandatory="y" />
+			<index name="pk_instrumentos" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="tipo_instrumento" >
+			<column name="cordas" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="teclas" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="sopro" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="percussao" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="id_tipo" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<index name="idx_tipo_instrumento" unique="NORMAL" >
+				<column name="id_tipo" />
+			</index>
+			<fk name="fk_tipo_instrumento" to_schema="toc_one" to_table="instrumentos" >
+				<fk_column name="id_tipo" pk="id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+	</schema>
+	<layout id="Layout_3ca486" name="Projeto_github" show_relation_columns="y" >
+		<entity schema="toc_one" name="instrumentos" color="b2cdf7" x="45" y="45" />
+		<entity schema="toc_one" name="tipo_instrumento" color="b2cdf7" x="315" y="45" />
+	</layout>
+</project>
