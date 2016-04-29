@@ -12,13 +12,13 @@
     </ui:define>
 
     <ui:define name="conteudo">
-        <h:form id="frmEditora">
-            <p:dataTable emptyMessage="Nenhum produto cadastrada!"
-                         value="#{MBProduto.itens}"
+        <h:form id="frmTipos">
+            <p:dataTable emptyMessage="Nenhum Tipo cadastrado!"
+                         value="#{MBTipos.itens}"
                          var="item" 
                          paginator="true"
                          rows="5"
-                         id="tbEditora">
+                         id="tbTipos">
 
                 <f:facet name="header">
                     Produto - Listagem  
@@ -26,39 +26,39 @@
                 <p:column headerText="ID" sortBy="#{item.id}" filterBy="#{item.id}">
                     <h:outputText value="#{item.id}" />
                 </p:column>
-                <p:column headerText="Quantidade" sortBy="#{item.qtd}" filterBy="#{item.qtd}">
-                    <h:outputText value="#{item.qtd}" />
+                <p:column headerText="Cordas" sortBy="#{item.corda}" filterBy="#{item.corda}">
+                    <h:outputText value="#{item.corda}" />
                 </p:column>
-                <p:column headerText="Descrição" sortBy="#{item.descricao}" filterBy="#{item.descricao}">
-                    <h:outputText value="#{item.descricao}" />
+                <p:column headerText="Sopro" sortBy="#{item.sopro}" filterBy="#{item.sopro}">
+                    <h:outputText value="#{item.sopro}" />
                 </p:column>
-                <p:column headerText="Razão Social" sortBy="#{item.razaoSocial}" filterBy="#{item.razaoSocial}">
-                    <h:outputText value="#{item.razaoSocial}" />
+                <p:column headerText="Percussão" sortBy="#{item.percussao}" filterBy="#{item.percussao}">
+                    <h:outputText value="#{item.percussao}" />
                 </p:column>
-                <p:column headerText="Preço" sortBy="#{item.preco}" filterBy="#{item.preco}">
-                    <h:outputText value="#{item.preco}" />
+                <p:column headerText="Teclas" sortBy="#{item.teclas}" filterBy="#{item.teclas}">
+                    <h:outputText value="#{item.teclas}" />
                 </p:column>
                 <p:column headerText="Opções">
                     <p:commandButton icon="ui-icon-trash"
-                                     actionListener="#{MBProduto.excluirProduto()}"
+                                     actionListener="#{MBTipos.excluirTipos()}"
                                      oncomplete="PF('dlgEdExcluir').show();"
-                                     update=":frmExcluiEditora:pnlExcluiEditora
+                                     update=":frmExcluiTipos:pnlExcluiTipos
                                      :msgGlobal">
-                        <f:setPropertyActionListener target="#{MBProduto.produto}"
+                        <f:setPropertyActionListener target="#{MBTipos.tipo}"
                                                      value="#{item}"/>
                     </p:commandButton>
                     <p:commandButton icon="ui-icon-pencil" 
-                                     actionListener="#{MBProduto.alterarProduto()}"
+                                     actionListener="#{MBTipos.alterarTipos()}"
                                      oncomplete="PF('dlgEdEditar').show();"
-                                     update=":frmEditarEditora:pnlEditarEditora
+                                     update=":frmEditarTipos:pnlEditarTipos
                                      :msgGlobal">
-                        <f:setPropertyActionListener target="#{MBProduto.produto}"
+                        <f:setPropertyActionListener target="#{MBTipos.tipo}"
                                                      value="#{item}"/>
                     </p:commandButton>
                 </p:column>
                 <f:facet name="footer">
-                    <p:commandButton value="Novo" actionListener="#{MBProduto.prepararProduto()}"
-                                     oncomplete="PF('dlgEdNovo').show();" update=":frmCadastraEditora:pnlCadastraEditora
+                    <p:commandButton value="Novo" actionListener="#{MBTipos.prepararTipos()}"
+                                     oncomplete="PF('dlgEdNovo').show();" update=":frmCadastraTipos:pnlCadastraTipos
                                      :msgGlobal" />
                 </f:facet>
             </p:dataTable>
@@ -68,22 +68,17 @@
         <p:dialog widgetVar="dlgEdNovo" closable="false"
                   draggable="false" resizable="false"
                   header="Nova Editora" modal="true" appendTo="@(body)">
-            <h:form id="frmCadastraEditora">
-                <h:panelGrid columns="2" id="pnlCadastraEditora">
-                    <p:outputLabel value="Quantidade"/>
-                    <h:inputText value="#{MBProduto.produto.qtd}" size="30" maxlength="50" />
-                    <p:outputLabel value="Descrição"/>
-                    <h:inputText value="#{MBProduto.produto.descricao}" size="30" maxlength="50"  /> 
-                    <p:outputLabel value="Preço"/>
-                    <h:inputText value="#{MBProduto.produto.preco}" size="30" maxlength="50" />
-                     <p:outputLabel value="Razão Social"/>
-                    <h:inputText value="#{MBProduto.produto.id_editora}" size="30" maxlength="50" />
+            <h:form id="frmCadastraTipos">
+                <h:panelGrid columns="2" id="pnlCadastraTipos">
+                    <p:outputLabel value="ID"/>
+                    <h:inputText value="#{MBInstrumentos.instrumentos.id_instrumento}" size="30" maxlength="50" />
+                    
                 </h:panelGrid>
                 <h:panelGrid columns="2">
                     <p:commandButton value="Gravar" 
-                                     actionListener="#{MBProduto.novoProduto()}"
+                                     actionListener="#{MBTipos.novoTipos()}"
                                      oncomplete="PF('dlgEdNovo').hide();" 
-                                     update=":frmEditora:tbEditora
+                                     update=":frmTipos:tbTipos
                                      :msgGlobal" />
                     <p:commandButton value="Cancelar" onclick="PF('dlgEdNovo').hide();" />
                 </h:panelGrid>
@@ -94,25 +89,17 @@
         <p:dialog widgetVar="dlgEdExcluir" closable="false"
                   draggable="false" resizable="false"
                   header="Excluir" modal="true" appendTo="@(body)">
-            <h:form id="frmExcluiEditora">
-                <h:panelGrid columns="2" id="pnlExcluiEditora" >
+            <h:form id="frmExcluiTipos">
+                <h:panelGrid columns="2" id="pnlExcluiTipos" >
                     <h:outputLabel value="ID: " />
-                    <h:outputLabel value="#{MBProduto.produto.id}" />
+                    <h:outputLabel value="#{MBTipos.tipo.id_tipo}" />
 
-                    <h:outputLabel value="Quantidade: " />
-                    <h:outputLabel value="#{MBProduto.produto.qtd}" />
-
-                    <h:outputLabel value="Descrição: " />
-                    <h:outputLabel value="#{MBProduto.produto.descricao}" />
-
-                    <h:outputLabel value="Preço: " />
-                    <h:outputLabel value="#{MBProduto.produto.preco}" />
                 </h:panelGrid>
                 <h:panelGrid columns="2">
                     <p:commandButton value="Excluir" 
-                                     actionListener="#{MBProduto.excluirProduto()}"
+                                     actionListener="#{MBTipos.excluirTipos()}"
                                      oncomplete="PF('dlgEdExcluir').hide();" 
-                                     update=":frmEditora:tbEditora
+                                     update=":frmTipos:tbTipos
                                      :msgGlobal" />
                     <p:commandButton value="Cancelar" onclick="PF('dlgEdExcluir').hide();" />
                 </h:panelGrid>
@@ -124,28 +111,17 @@
         <p:dialog widgetVar="dlgEdEditar" closable="false"
                   draggable="false" resizable="false"
                   header="Editar" modal="true" appendTo="@(body)">
-            <h:form id="frmEditarEditora">
-                <h:panelGrid columns="2" id="pnlEditarEditora">
+            <h:form id="frmEditarTipos">
+                <h:panelGrid columns="2" id="pnlEditarTipos">
                     <h:outputLabel value="ID: " />
-                    <h:outputLabel value="#{MBProduto.produto.id}" />
+                    <h:outputLabel value="#{MBTipos.tipo.id_tipo}" />
 
-                    <h:outputLabel value="Quantidade: " />
-                    <h:inputText value="#{MBProduto.produto.qtd}" size="30" maxlength="50" />
-
-                    <h:outputLabel value="Descriçao: " />
-                    <h:inputText value="#{MBProduto.produto.descricao}" size="30" maxlength="50"  />
-                    
-                    <h:outputLabel value="Preço: " />
-                    <h:inputText value="#{MBProduto.produto.preco}" size="30" maxlength="50" />
-                    
-                    <h:outputLabel value="Razão Social: " />
-                    <h:inputText value="#{MBProduto.produto.id_editora}" size="30" maxlength="50"  />
                 </h:panelGrid>
                 <h:panelGrid columns="2">
                     <p:commandButton value="Editar" 
-                                     actionListener="#{MBProduto.alterarProduto()}"
+                                     actionListener="#{MBTipos.alterarTipos()}"
                                      oncomplete="PF('dlgEdEditar').hide();" 
-                                     update=":frmEditora:tbEditora
+                                     update=":frmTipos:tbTipos
                                      :msgGlobal" />
                     <p:commandButton value="Cancelar" onclick="PF('dlgEdEditar').hide();" />
                 </h:panelGrid>

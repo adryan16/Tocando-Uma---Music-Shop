@@ -11,7 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 
-@ManagedBean(name = "MBInstrumentos")
+@ManagedBean(name = "MBinstrumentos")
 //Escopo: Session (Criado quando o Tomcat é iniciado e finalizado quando o Tomcat) //
 //Escopo: Request (A cada clique é instanciado) //
 //Escopo: View (Só existe enquanto estiver manipulando a tela dele) //

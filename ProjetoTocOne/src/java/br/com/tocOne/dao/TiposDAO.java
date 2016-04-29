@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TiposDAO {
-    public void cadastarProduto(Tipos p) throws ClassNotFoundException, SQLException{
+    public void cadastarTipos(Tipos p) throws ClassNotFoundException, SQLException{
          String sql = "INSERT INTO toc_one (cordas, sopro, percussao, teclas) VALUES (?,?,?,?)";
 
         Connection connection = ConnectionFactory.getConnection();
@@ -23,7 +23,7 @@ public class TiposDAO {
         stmt.close();
     }
 
-    public void excluirProduto(Tipos p) throws ClassNotFoundException, SQLException {
+    public void excluirTipos(Tipos p) throws ClassNotFoundException, SQLException {
         String sql = "DELETE FROM toc_one WHERE id_tipo = ? ";
 
         Connection connection = ConnectionFactory.getConnection();
@@ -34,7 +34,7 @@ public class TiposDAO {
         stmt.close();
     }
 
-    public void alterarProduto(Tipos p) throws ClassNotFoundException, SQLException {
+    public void alterarTipos(Tipos p) throws ClassNotFoundException, SQLException {
         String sql = "UPDATE tipo_instrumento SET cordas = ?, sopro = ?, percussao = ?, teclas = ? WHERE id_tipo = ?";
 
         Connection connection = ConnectionFactory.getConnection();
@@ -50,7 +50,7 @@ public class TiposDAO {
 
     }
 
-    public Tipos pesquisarProduto(Tipos p) throws ClassNotFoundException, SQLException {
+    public Tipos pesquisarTipos(Tipos p) throws ClassNotFoundException, SQLException {
         String sql = "SELECT * FROM  WHERE id_tipo = ?";
 
         Connection connection = ConnectionFactory.getConnection();

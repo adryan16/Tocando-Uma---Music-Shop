@@ -52,15 +52,15 @@ public class TiposBean {
         }
     }
 
-    public void prepararProduto() {
+    public void prepararTipos() {
         tipo = new Tipos();
     }
 
-    public void novoProduto() {
+    public void novoTipos() {
         try {
             TiposDAO dao = new TiposDAO();
             try {
-                dao.cadastarProduto(tipo);
+                dao.cadastarTipos(tipo);
                 itens = dao.listar();
                 JSFUtil.addMsgSucesso("Produto salvo com sucesso.");
             } catch (ClassNotFoundException ex) {
@@ -73,11 +73,11 @@ public class TiposBean {
         }
     }
 
-    public void excluirProduto() {
+    public void excluirTipos() {
         TiposDAO dao = new TiposDAO();
 
         try {
-           dao.excluirProduto(tipo);
+           dao.excluirTipos(tipo);
             itens = dao.listar();
             JSFUtil.addMsgSucesso("Produto excluído com sucesso.");
         } catch (ClassNotFoundException ex) {
@@ -90,11 +90,11 @@ public class TiposBean {
 
     }
 
-    public void alterarProduto() {
+    public void alterarTipos() {
         TiposDAO dao = new TiposDAO();
 
         try {
-            dao.alterarProduto(tipo);
+            dao.alterarTipos(tipo);
             itens = dao.listar();
             JSFUtil.addMsgSucesso("Produto alterado com sucesso.");
         } catch (ClassNotFoundException ex) {

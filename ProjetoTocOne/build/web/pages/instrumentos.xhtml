@@ -14,41 +14,58 @@
     <ui:define name="conteudo">
         <h:form id="frmInstrumentos">
             <p:dataTable emptyMessage="Nenhuma editora cadastrada!"
-                         value="#{MBInstrumentos.itens}"
+                         value="#{MBinstrumentos.itens}"
                          var="item" 
                          paginator="true"
                          rows="5"
-                         id="tbEditora">
+                         id="tbInstrumento">
 
                 <f:facet name="header">
                     Editora - Listagem  
                 </f:facet>
-                <p:column headerText="ID" sortBy="#{item.id}" filterBy="#{item.id}">
-                    <h:outputText value="#{item.id}" />
+                <p:column headerText="ID" sortBy="#{item.id_instrumento}" filterBy="#{item.id_instrumento}">
+                    <h:outputText value="#{item.id_instrumento}" />
                 </p:column>
+
                 <p:column headerText="Marca" sortBy="#{item.marca}" filterBy="#{item.marca}">
-                    <h:outputText value="#{item.marca}" />
+                    <h:outputText value="#{item.marca}" />    
+                </p:column>
+
+                <p:column headerText="Cor" sortBy="#{item.cor}" filterBy="#{item.cor}">
+                    <h:outputText value="#{item.marca}" />    
+                </p:column>
+
+                <p:column headerText="Quantidade" sortBy="#{item.qtd}" filterBy="#{item.qtd}">
+                    <h:outputText value="#{item.qtd}" />    
+                </p:column>
+
+                <p:column headerText="Modelo" sortBy="#{item.modelo}" filterBy="#{item.modelo}">
+                    <h:outputText value="#{item.modelo}" /> 
+                </p:column>
+
+                <p:column headerText="Preço Unitário" sortBy="#{item.precoUnitario}" filterBy="#{item.precoUnitario}">
+                    <h:outputText value="#{item.precoUnitario}" />    
                 </p:column>
                 <p:column headerText="Opções">
                     <p:commandButton icon="ui-icon-trash"
-                                     actionListener="#{MBInstrumentos.excluirInstrumento()}"
+                                     
                                      oncomplete="PF('dlgEdExcluir').show();"
                                      update=":frmExcluiInstrumento:pnlExcluiInstrumento
                                      :msgGlobal">
-                        <f:setPropertyActionListener target="#{MBInstrumentos.instrumentos}"
+                        <f:setPropertyActionListener target="#{MBinstrumentos.instrumentos}"
                                                      value="#{item}"/>
                     </p:commandButton>
                     <p:commandButton icon="ui-icon-pencil" 
-                                     actionListener="#{MBInstrumentos.alterarInstrumento()}"
+                                     actionListener="#{MBinstrumentos.alterarInstrumento()}"
                                      oncomplete="PF('dlgEdEditar').show();"
                                      update=":frmEditarInstrumento:pnlEditarInstrumento
                                      :msgGlobal">
-                        <f:setPropertyActionListener target="#{MBInstrumentos.instrumentos}"
+                        <f:setPropertyActionListener target="#{MBinstrumentos.instrumentos}"
                                                      value="#{item}"/>
                     </p:commandButton>
                 </p:column>
                 <f:facet name="footer">
-                    <p:commandButton value="Novo" actionListener="#{MBInstrumentos.prepararInstrumento()}"
+                    <p:commandButton value="Novo" actionListener="#{MBinstrumentos.prepararInstrumento()}"
                                      oncomplete="PF('dlgEdNovo').show();" update=":frmCadastraInstrumento:pnlCadastraInstrumento
                                      :msgGlobal" />
                 </f:facet>
@@ -62,27 +79,27 @@
             <h:form id="frmCadastraInstrumento">
                 <h:panelGrid columns="2" id="pnlCadastraInstrumento">
                     <p:outputLabel value="ID"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.id_instrumento}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.id_instrumento}" />
 
                     <p:outputLabel value="Marca"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.marca}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.marca}" />
 
                     <p:outputLabel value="Cor"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.cor}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.cor}" />
 
                     <p:outputLabel value="Quantidade"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.qtd}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.qtd}" />
 
                     <p:outputLabel value="Modelo"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.modelo}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.modelo}" />
 
                     <p:outputLabel value="Preço Unitário"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.precoUnitario}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.precoUnitario}" />
 
                 </h:panelGrid>
                 <h:panelGrid columns="2">
                     <p:commandButton value="Gravar" 
-                                     actionListener="#{MBInstrumentos.novoInstrumento()}"
+                                     actionListener="#{MBinstrumentos.novoInstrumento()}"
                                      oncomplete="PF('dlgEdNovo').hide();" 
                                      update=":frmInstrumento:tbInstrumento
                                      :msgGlobal" />
@@ -98,27 +115,27 @@
             <h:form id="frmExcluiInstrumento">
                 <h:panelGrid columns="2" id="pnlExcluiInstrumento" >
                     <h:outputLabel value="ID: " />
-                    <h:outputText value="#{MBInstrumentos.instrumentos.id_instrumento}" />
+                    <h:outputText value="#{MBinstrumentos.instrumentos.id_instrumento}" />
 
                     <p:outputLabel value="Marca"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.marca}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.marca}" />
 
                     <p:outputLabel value="Cor"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.cor}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.cor}" />
 
                     <p:outputLabel value="Quantidade"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.qtd}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.qtd}" />
 
                     <p:outputLabel value="Modelo"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.modelo}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.modelo}" />
 
                     <p:outputLabel value="Preço Unitário"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.precoUnitario}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.precoUnitario}" />
 
                 </h:panelGrid>
                 <h:panelGrid columns="2">
                     <p:commandButton value="Excluir" 
-                                     actionListener="#{MBInstrumentos.excluirInstrumento()}"
+                                     actionListener="#{MBinstrumentos.excluirInstrumento()}"
                                      oncomplete="PF('dlgEdExcluir').hide();" 
                                      update=":frmInstrumento:tbInstrumento
                                      :msgGlobal" />
@@ -135,27 +152,27 @@
             <h:form id="frmEditarInstrumento">
                 <h:panelGrid columns="2" id="pnlEditarInstrumento">
                     <h:outputLabel value="ID: " />
-                    <h:outputLabel value="#{MBInstrumentos.instrumentos.id_instrumento}" />
-                    
+                    <h:outputLabel value="#{MBinstrumentos.instrumentos.id_instrumento}" />
+
                     <p:outputLabel value="Marca"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.marca}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.marca}" />
 
                     <p:outputLabel value="Cor"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.cor}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.cor}" />
 
                     <p:outputLabel value="Quantidade"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.qtd}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.qtd}" />
 
                     <p:outputLabel value="Modelo"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.modelo}" />
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.modelo}" />
 
                     <p:outputLabel value="Preço Unitário"/>
-                    <p:inputText size="30" maxlength="50" value="#{MBInstrumentos.instrumentos.precoUnitario}" />
-                    
+                    <p:inputText size="30" maxlength="50" value="#{MBinstrumentos.instrumentos.precoUnitario}" />
+
                 </h:panelGrid>
                 <h:panelGrid columns="2">
                     <p:commandButton value="Editar" 
-                                     actionListener="#{MBInstrumentos.alterarInstrumento()}"
+                                     actionListener="#{MBinstrumentos.alterarInstrumento()}"
                                      oncomplete="PF('dlgEdEditar').hide();" 
                                      update=":frmInstrumento:tbInstrumento
                                      :msgGlobal" />
